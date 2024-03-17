@@ -5,18 +5,21 @@ from models.user import User
 db_commands = Blueprint('db', __name__)
 
 
+# create tables
 @db_commands.cli.command('create')
 def create_tables():
     db.create_all()
     print("Tables Created!")
 
 
+# delete created tables
 @db_commands.cli.command('drop')
 def drop_tables():
     db.drop_all()
     print("Tables Dropped!")
 
 
+# add data to created tables
 @db_commands.cli.command('seed')
 def seed_tables():
     users = [
