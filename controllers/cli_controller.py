@@ -2,6 +2,7 @@ from flask import Blueprint
 from init import db, bcrypt
 from models.user import User
 from models.developer import Developer
+from models.game import Game
 from sqlalchemy.exc import IntegrityError, DataError
 
 db_commands = Blueprint('db', __name__)
@@ -45,7 +46,7 @@ def seed_tables():
     developers = [
         Developer(
             name = "Notactvision",
-            date_founded = "2020/15/15"
+            date_founded = "2020/11/15"
         ),
         Developer(
             name = "Red Fist Games",
@@ -54,6 +55,26 @@ def seed_tables():
     ]
 
     db.session.add_all(developers)
+
+
+    games = [
+        Game(
+            title = "Gunblood 3",
+            description = "You already know what it is!",
+            genre = "Action/Platformer",
+            release_date = "2023/1/1",
+            developer_id = 1
+        ),
+        Game(
+            title = "Shade, Regends of Ladow",
+            description = "omg amazing game with good rate on gacha",
+            genre = "Strategy/Gacha",
+            release_date = "2018/2/21",
+            developer_id = 2
+        )
+    ]
+
+    db.session.add_all(games)
 
     try:
         db.session.commit()
