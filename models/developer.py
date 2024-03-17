@@ -1,16 +1,17 @@
 from init import db, ma
-from sqlalchemy import CheckConstraint
+from sqlalchemy import CheckConstraint, func
+from datetime import datetime
 
 class Developer(db.Model):
 
     __tablename__ = "developers"
 
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(25), nullable = False)
-    date_founded = db.Column(db.String(8))
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(25), nullable=False)
+    date_founded = db.Column(db.Date)
 
     __table_args__ = (
-        CheckConstraint("date_founded ~ '^\d{2}/\d{2}/\d{2}$'", name='check_date_format'),
+        CheckConstraint('date_founded < CURRENT_DATE', name='check_future'),
     )
 
 class DeveloperSchema(ma.Schema):
@@ -18,4 +19,4 @@ class DeveloperSchema(ma.Schema):
         fields = ("id", "name", "date_founded")
 
 developer_schema = DeveloperSchema()
-developers_schema = DeveloperSchema(many = True)
+developers_schema = DeveloperSchema(many=True)

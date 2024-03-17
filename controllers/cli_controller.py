@@ -2,7 +2,7 @@ from flask import Blueprint
 from init import db, bcrypt
 from models.user import User
 from models.developer import Developer
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, DataError
 
 db_commands = Blueprint('db', __name__)
 
@@ -45,11 +45,11 @@ def seed_tables():
     developers = [
         Developer(
             name = "Notactvision",
-            date_founded = "15/12/15"
+            date_founded = "2020/15/15"
         ),
         Developer(
             name = "Red Fist Games",
-            date_founded = "19/11/96"
+            date_founded = "1990/8/12"
         )
     ]
 
@@ -60,5 +60,13 @@ def seed_tables():
         print("Tables Seeded!")
 
     except IntegrityError as e:
-        print("Integrity Error")
-        print("Tables failed to seed!")
+        db.session.rollback()
+        print(e)
+        print("Tables failed to seed! Integrity Error")
+
+    except DataError as v:
+        db.session.rollback()
+        print(v)
+        print("Tables failed to seed! Data Error")
+
+    
