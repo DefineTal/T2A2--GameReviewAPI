@@ -3,7 +3,7 @@ from sqlalchemy import CheckConstraint
 
 class Developer(db.Model):
 
-    __tablename__ = "developer"
+    __tablename__ = "developers"
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(25), nullable = False)
