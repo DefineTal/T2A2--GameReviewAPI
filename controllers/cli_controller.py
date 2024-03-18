@@ -3,6 +3,7 @@ from init import db, bcrypt
 from models.user import User
 from models.developer import Developer
 from models.game import Game
+from models.favourite import Favourite
 from sqlalchemy.exc import IntegrityError, DataError
 
 db_commands = Blueprint('db', __name__)
@@ -75,6 +76,16 @@ def seed_tables():
     ]
 
     db.session.add_all(games)
+
+
+    favourites = [
+        Favourite(
+            user_id = 1,
+            game_id = 1
+        )
+    ]
+    
+    db.session.add_all(favourites)
 
     try:
         db.session.commit()

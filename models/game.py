@@ -18,6 +18,7 @@ class Game(db.Model):
     developer_id = db.Column(db.Integer, db.ForeignKey('developers.id'), nullable=False)
 
     developer = db.relationship('Developer', back_populates = 'games')
+    favourites = db.relationship('Favourite', back_populates = 'game', cascade = 'all, delete')
     
     # CheckConstraint to ensure release_date is in the past
     __table_args__ = (
@@ -26,6 +27,8 @@ class Game(db.Model):
 
 
 class GameSchema(ma.Schema):
+
+    favourites = fields.List(fields.Nested('FavouriteSchema'))
     developer = fields.Nested('DeveloperSchema', only=['id','name'])
 
     class Meta:

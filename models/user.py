@@ -1,4 +1,6 @@
 from init import db, ma
+from marshmallow import fields
+
 
 class User(db.Model):
     __tablename__ = "users"
@@ -9,8 +11,13 @@ class User(db.Model):
     password = db.Column(db.String, nullable = False)
     is_admin = db.Column(db.Boolean, default = False)
 
+    favourites = db.relationship('Favourite', back_populates = 'user', cascade = 'all, delete')
+
 # Schema 
 class UserSchema(ma.Schema):
+
+    favourites = fields.List(fields.Nested('FavouriteSchema'))
+
     class Meta:
         fields = ("id", "username", "password", "is_admin")
 
