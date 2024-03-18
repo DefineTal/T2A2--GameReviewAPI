@@ -1,6 +1,7 @@
 from init import db, ma
 from sqlalchemy import CheckConstraint, func
 from datetime import datetime
+from marshmallow import fields
 
 class Developer(db.Model):
 
@@ -10,11 +11,16 @@ class Developer(db.Model):
     name = db.Column(db.String(25), nullable=False)
     date_founded = db.Column(db.Date)
 
+    games = db.relationship('Game', back_populates = 'developer', cascade = 'all, delete')
+
     __table_args__ = (
         CheckConstraint('date_founded < CURRENT_DATE', name='check_future'),
     )
 
 class DeveloperSchema(ma.Schema):
+
+    games = fields.List(fields.Nested('GameSchema', exclude=['genre', 'publisher', 'release_date','developer']))
+    
     class Meta:
         fields = ("id", "name", "date_founded")
 

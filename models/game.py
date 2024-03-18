@@ -14,19 +14,23 @@ class Game(db.Model):
     genre = db.Column(db.String(20))
     publisher = db.Column(db.String(25))
     release_date = db.Column(db.Date, nullable=False)
+
     developer_id = db.Column(db.Integer, db.ForeignKey('developers.id'), nullable=False)
+
+    developer = db.relationship('Developer', back_populates = 'games')
     
     # CheckConstraint to ensure release_date is in the past
     __table_args__ = (
         CheckConstraint('release_date < CURRENT_DATE', name='check_future'),
     )
 
-class GameSchema(ma.Schema):
 
-    developer = fields.Nested('DeveloperSchema', only = ['name'])
+class GameSchema(ma.Schema):
+    developer = fields.Nested('DeveloperSchema', only=['id','name'])
 
     class Meta:
         fields = ('id', 'title', 'description', 'genre', 'publisher', 'release_date', 'developer')
+
 
 
 game_schema = GameSchema()
