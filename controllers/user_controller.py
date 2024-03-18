@@ -20,4 +20,4 @@ def get_user(user_id):
     if user:
         return user_schema.dump(user)
     else:
-        return{"error": f"Card id {user_id} doesnt exist. Please try again"}, 404
+        return{"error": f"user id {user_id} doesn't exist. Please try again"}, 404
