@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from init import db
 from models.developer import Developer, developer_schema, developers_schema
 
-dev_bp = Blueprint('developers', __name__, url_prefix='/developer/')
+dev_bp = Blueprint('developers', __name__, url_prefix='/developers/')
 
 @dev_bp.route('/')
 def get_all_devs():
