@@ -19,16 +19,18 @@ class Game(db.Model):
 
     developer = db.relationship('Developer', back_populates = 'games')
     favourites = db.relationship('Favourite', back_populates = 'game', cascade = 'all, delete')
+    reviews = db.relationship('Review', back_populates = 'game', cascade = 'all, delete')
     
     # CheckConstraint to ensure release_date is in the past
     __table_args__ = (
-        CheckConstraint('release_date < CURRENT_DATE', name='check_future')
+        CheckConstraint('release_date < CURRENT_DATE', name='check_future'),
     )
 
 
 class GameSchema(ma.Schema):
 
     favourites = fields.List(fields.Nested('FavouriteSchema'))
+    reviews =  fields.List(fields.Nested('ReviewSchema'))
     developer = fields.Nested('DeveloperSchema', only=['id','name'])
 
     class Meta:

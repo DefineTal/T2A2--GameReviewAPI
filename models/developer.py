@@ -14,7 +14,7 @@ class Developer(db.Model):
     games = db.relationship('Game', back_populates = 'developer', cascade = 'all, delete')
 
     __table_args__ = (
-        CheckConstraint('date_founded < CURRENT_DATE', name='check_future')
+        CheckConstraint('date_founded < CURRENT_DATE', name='check_future'),
     )
 
 class DeveloperSchema(ma.Schema):

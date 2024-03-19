@@ -1,5 +1,6 @@
 from init import db, ma
 from marshmallow import fields
+from sqlalchemy import CheckConstraint
 
 class Review(db.Model):
     __tablename__ = "reviews"
@@ -18,7 +19,7 @@ class Review(db.Model):
     game = db.relationship('Game', back_populates = 'reviews')
 
     __table_args__ = (
-        db.CheckConstraint('rating > 0 AND rating < 11', name='check_value_range')
+        db.CheckConstraint('rating >= 0 AND rating <= 10', name='check_rating_range'),
     )
 
 class ReviewSchema(ma.Schema):

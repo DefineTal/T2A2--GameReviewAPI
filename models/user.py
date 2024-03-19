@@ -12,11 +12,14 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default = False)
 
     favourites = db.relationship('Favourite', back_populates = 'user', cascade = 'all, delete')
+    reviews = db.relationship('Review', back_populates = 'user', cascade = 'all, delete')
 
 # Schema 
 class UserSchema(ma.Schema):
 
     favourites = fields.List(fields.Nested('FavouriteSchema'))
+    reviews = fields.List(fields.Nested('ReviewSchema'))
+    
 
     class Meta:
         fields = ("id", "username", "password", "is_admin")
