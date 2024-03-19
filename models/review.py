@@ -17,6 +17,10 @@ class Review(db.Model):
     user = db.relationship('User', back_populates = 'reviews')
     game = db.relationship('Game', back_populates = 'reviews')
 
+    __table_args__ = (
+        db.CheckConstraint('rating > 0 AND rating < 11', name='check_value_range')
+    )
+
 class ReviewSchema(ma.Schema):
     
     user = fields.Nested('UserSchema', only = ['username'])

@@ -22,7 +22,7 @@ class Game(db.Model):
     
     # CheckConstraint to ensure release_date is in the past
     __table_args__ = (
-        CheckConstraint('release_date < CURRENT_DATE', name='check_future'),
+        CheckConstraint('release_date < CURRENT_DATE', name='check_future')
     )
 
 
