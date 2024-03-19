@@ -35,5 +35,8 @@ def create_app():
     from controllers.game_controller import game_bp
     app.register_blueprint(game_bp)
 
+    from controllers.fav_controller import fav_bp
+    app.register_blueprint(fav_bp)
+
     return app
     
