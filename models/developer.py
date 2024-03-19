@@ -1,5 +1,5 @@
 from init import db, ma
-from sqlalchemy import CheckConstraint, func
+from sqlalchemy import CheckConstraint
 from datetime import datetime
 from marshmallow import fields
 
