@@ -38,5 +38,8 @@ def create_app():
     from controllers.fav_controller import fav_bp
     app.register_blueprint(fav_bp)
 
+    from controllers.review_controller import review_bp
+    app.register_blueprint(review_bp)
+
     return app
     
