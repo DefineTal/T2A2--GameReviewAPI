@@ -22,20 +22,25 @@ def get_game(game_id):
         return game_schema.dump(game)
     else:
         return{"error": f"user id {game_id} doesn't exist. Please try again"}, 404
-    
+
+
 @game_bp.route('/', methods=["POST"])
-#@jwt_required()
-def create_dev():
+@jwt_required()
+def create_game():
     body_data = request.get_json()
-    game = Game(
-        title = body_data.get('title'),
-        description = body_data.get("description"),
-        genre = body_data.get("genre"),
-        publisher = body_data.get("publisher"),
-        release_date = body_data.get("release_date"),
-        developer = body_data.get("developer")
-    )
-    db.session.add(game)
+    try:
+        game = Game(
+            title = body_data.get('title'),
+            description = body_data.get('description'),
+            genre = body_data.get('genre'),
+            publisher = body_data.get('publisher'),
+            release_date = body_data.get('release_date'),
+            developer_id = body_data.get('developer_id')
+        )
+        db.session.add(game)
+
+    except AttributeError:
+        return {"error": "Attribute error! Double check the json input fields!"}
 
     try:
         db.session.commit()
@@ -55,3 +60,18 @@ def create_dev():
     
     except:
         return {"error": "Data error. Try again!"}, 409
+
+
+@game_bp.route('/<int:game_id>', methods = ["DELETE"])
+#@jwt_required()
+def delete_game(game_id):
+    stmt = db.select(Game).where(Game.id == game_id)
+    game = db.session.scalar(stmt)
+    if game:
+        db.session.delete(game)
+        db.session.commit()
+        return {'message': f"dev {game.title} deleted successfully"}
+    else:
+        db.session.rollback()
+        return {'error': f"game with id {game_id} not found"}, 404
+    

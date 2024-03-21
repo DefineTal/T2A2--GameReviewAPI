@@ -30,7 +30,7 @@ def create_dev():
     body_data = request.get_json()
     dev = Developer(
         name = body_data.get('name'),
-        date_founded = body_data.get("date_founded")
+        date_founded = body_data.get('date_founded')
     )
     db.session.add(dev)
 
@@ -64,6 +64,7 @@ def delete_dev(dev_id):
         db.session.commit()
         return {'message': f"dev {dev.name} deleted successfully"}
     else:
+        db.session.rollback()
         return {'error': f"dev with id {dev_id} not found"}, 404
     
 
