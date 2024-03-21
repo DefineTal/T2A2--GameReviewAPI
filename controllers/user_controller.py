@@ -21,3 +21,4 @@ def get_user(user_id):
         return user_schema.dump(user)
     else:
         return{"error": f"user id {user_id} doesn't exist. Please try again"}, 404
+    
