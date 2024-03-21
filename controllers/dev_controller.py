@@ -55,7 +55,7 @@ def create_dev():
     
 
 @dev_bp.route('/<int:dev_id>', methods = ["DELETE"])
-#@jwt_required()
+@jwt_required()
 def delete_dev(dev_id):
     stmt = db.select(Developer).where(Developer.id == dev_id)
     dev = db.session.scalar(stmt)
@@ -63,5 +63,21 @@ def delete_dev(dev_id):
         db.session.delete(dev)
         db.session.commit()
         return {'message': f"dev {dev.name} deleted successfully"}
+    else:
+        return {'error': f"dev with id {dev_id} not found"}, 404
+    
+
+@dev_bp.route('/<int:dev_id>', methods = ["PUT", "PATCH"])
+def update_dev(dev_id):
+    body_data = request.get_json()
+    stmt = db.select(Developer).filter_by(id = dev_id)
+    dev = db.session.scalar(stmt)
+    if dev:
+        dev.name = body_data.get('name') or dev.name
+        dev.date_founded = body_data.get('date_founded') or dev.date_founded
+
+        db.session.commit()
+        return developer_schema.dump(dev)
+    
     else:
         return {'error': f"dev with id {dev_id} not found"}, 404
