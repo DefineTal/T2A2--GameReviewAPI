@@ -8,7 +8,7 @@ class Developer(db.Model):
     __tablename__ = "developers"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(25), nullable=False)
+    name = db.Column(db.String(25), nullable=False, unique = True)
     date_founded = db.Column(db.Date)
 
     games = db.relationship('Game', back_populates = 'developer', cascade = 'all, delete')

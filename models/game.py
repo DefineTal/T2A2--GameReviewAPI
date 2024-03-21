@@ -9,7 +9,7 @@ class Game(db.Model):
 
     # Model
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255), nullable=False)
+    title = db.Column(db.String(255), nullable=False, unique = True)
     description = db.Column(db.Text)
     genre = db.Column(db.String(20))
     publisher = db.Column(db.String(25))
