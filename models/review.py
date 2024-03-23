@@ -24,9 +24,9 @@ class Review(db.Model):
 
 class ReviewSchema(ma.Schema):
     
-    user = fields.Nested('UserSchema', only = ['username'])
+    user = fields.Nested('UserSchema', only = ['id','username'])
 
-    game = fields.Nested('GameSchema', only = ['title']) 
+    game = fields.Nested('GameSchema', only = ['id','title']) 
 
     class Meta:
         fields = ('id', 'user', 'game', 'rating', 'date_made', 'completed', 'content')

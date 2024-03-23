@@ -1,3 +1,4 @@
+
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from init import db
@@ -27,7 +28,7 @@ def get_game(game_id):
 @game_bp.route('/', methods=["POST"])
 @jwt_required()
 def create_game():
-    body_data = game_schema.load(request.get_json())
+    body_data = request.get_json()
     try:
         game = Game(
             title = body_data.get('title'),
@@ -73,25 +74,5 @@ def delete_game(game_id):
         return {'message': f"dev {game.title} deleted successfully"}
     else:
         db.session.rollback()
-        return {'error': f"game with id {game_id} not found"}, 404
-    
-
-@game_bp.route('/<int:game_id>', methods = ["PUT", "PATCH"])
-def edit_game(game_id):
-    body_data = game_schema.load(request.get_json())
-    stmt = db.select(Game).filter_by(id = game_id)
-    game = db.session.scalar(stmt)
-    if game:
-        game.title = body_data.get('title') or game.title
-        game.release_date = body_data.get('date_founded') or game.date_founded
-        game.description = body_data.get('description') or game.description
-        game.genre = body_data.get('genre') or game.genre
-        game.publisher = body_data.get('publisher') or game.publisher
-        game.developer_id = body_data.get('developer_id') or game.developer_id
-        
-        db.session.commit()
-        return game_schema.dump(game)
-    
-    else:
         return {'error': f"game with id {game_id} not found"}, 404
     

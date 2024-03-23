@@ -30,13 +30,13 @@ class Game(db.Model):
 class GameSchema(ma.Schema):
 
     favourites = fields.List(fields.Nested('FavouriteSchema'))
-    reviews =  fields.List(fields.Nested('ReviewSchema'))
+    reviews =  fields.List(fields.Nested('ReviewSchema', exclude = ['game']))
     developer = fields.Nested('DeveloperSchema', only=['id','name'])
 
     class Meta:
-        fields = ('id', 'title', 'description', 'genre', 'publisher', 'release_date', 'developer')
+        fields = ('id', 'title', 'description', 'genre', 'publisher', 'release_date', 'developer', 'reviews')
 
 
 
 game_schema = GameSchema()
-games_schema = GameSchema(many = True)
+games_schema = GameSchema(many = True, exclude = ['reviews', 'id'])
