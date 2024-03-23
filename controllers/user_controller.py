@@ -22,3 +22,19 @@ def get_user(user_id):
     else:
         return{"error": f"user id {user_id} doesn't exist. Please try again"}, 404
     
+@users_bp.route('/<int:user_id>', methods=["DELETE"])
+@jwt_required()
+def delete_user(user_id):
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    current_user_id = jwt_required()
+    if user.id == current_user_id:
+        db.session.delete(user)
+        db.session.commit()
+        return {'message': f"user with id of {user.id} and username of {user.username} deleted successfully"}
+    else:
+        db.session.rollback()
+        return {'error': f"Make sure your only deleting an account that you are currently on! {user.is_admin}"}
+
+
+    

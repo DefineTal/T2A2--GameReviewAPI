@@ -1,5 +1,6 @@
 from init import db, ma
 from marshmallow import fields
+from marshmallow.validate import Length
 
 
 class User(db.Model):
@@ -17,6 +18,9 @@ class User(db.Model):
 # Schema 
 class UserSchema(ma.Schema):
 
+    username = fields.String(required = True, validate = Length(min = 1))
+    password = fields.String(required = True, validate = Length(min = 4)) 
+
     favourites = fields.List(fields.Nested('FavouriteSchema'))
     reviews = fields.List(fields.Nested('ReviewSchema'))
     
@@ -24,5 +28,5 @@ class UserSchema(ma.Schema):
     class Meta:
         fields = ("id", "username", "password", "is_admin")
 
-user_schema = UserSchema(exclude = ["password"])
+user_schema = UserSchema()
 users_schema = UserSchema(many = True, exclude = ["password"])

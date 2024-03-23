@@ -4,31 +4,28 @@ from models.user import User, user_schema
 from psycopg2 import errorcodes
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import create_access_token
-from datetime import timedelta
+from datetime import timedelta 
+from marshmallow import ValidationError 
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth/')
 
 @auth_bp.route("/register", methods=["POST"]) # /auth/register
 def auth_register():
     try:    
-        body_data = request.get_json()
-        hashed_password = ""
+        body_data = user_schema.load(request.get_json())
+        
+        user = User(
+            username = body_data.get('username'),
+        )
+
         password = body_data.get('password')
-        
-        # checks if password field is null
+
         if password:
-            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        
-        # if null returns error
+            user.password = bcrypt.generate_password_hash(password).decode('utf-8')
+
         else:
             error = {"error": "password cant be null!"}
             return error, 409
-        
-
-        user = User(
-            username = body_data.get('username'),
-            password = hashed_password
-        )
 
         db.session.add(user)
         db.session.commit()
@@ -41,6 +38,10 @@ def auth_register():
             return {"error": f"{err.orig.diag.column_name} is null, make sure to input a value!"}, 409
         if err.orig.pgcode == errorcodes.UNIQUE_VIOLATION:
             return {"error": "Username is taken!"}, 409
+        
+    except ValidationError as val_err:
+        return {"error": str(val_err)}, 400
+
 
 
 @auth_bp.route("/login", methods=['POST'])

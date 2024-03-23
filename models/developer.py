@@ -1,7 +1,8 @@
 from init import db, ma
 from sqlalchemy import CheckConstraint
-from datetime import datetime
 from marshmallow import fields
+from marshmallow.validate import Length
+
 
 class Developer(db.Model):
 
@@ -18,6 +19,8 @@ class Developer(db.Model):
     )
 
 class DeveloperSchema(ma.Schema):
+
+    name = fields.String(required = True, validate = Length(min = 1))
 
     games = fields.List(fields.Nested('GameSchema', exclude=['genre', 'publisher', 'release_date','developer']))
     
