@@ -5,7 +5,8 @@ from psycopg2 import errorcodes
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import create_access_token
 from datetime import timedelta 
-from marshmallow import ValidationError 
+from marshmallow import ValidationError
+
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth/')
 
@@ -30,7 +31,7 @@ def auth_register():
         db.session.add(user)
         db.session.commit()
 
-        return user_schema.dump(user), 201
+        return {"created new_user with username": body_data.get("username")}, 201
 
 
     except IntegrityError as err:
