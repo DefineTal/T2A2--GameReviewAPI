@@ -39,4 +39,4 @@ class GameSchema(ma.Schema):
 
 
 game_schema = GameSchema()
-games_schema = GameSchema(many = True, exclude = ['reviews', 'id'])
+games_schema = GameSchema(many = True, exclude = ['reviews'])

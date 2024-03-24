@@ -6,6 +6,7 @@ from models.game import Game, game_schema, games_schema
 from psycopg2 import errorcodes
 from sqlalchemy.exc import IntegrityError, ArgumentError
 from controllers.review_controller import review_bp
+from controllers.user_controller import is_user_admin
 
 game_bp = Blueprint('games', __name__, url_prefix='/games/')
 game_bp.register_blueprint(review_bp)
@@ -68,6 +69,9 @@ def create_game():
 @game_bp.route('/<int:game_id>', methods = ["DELETE"])
 @jwt_required()
 def delete_game(game_id):
+    is_admin = is_user_admin()
+    if not is_admin:
+        return
     stmt = db.select(Game).where(Game.id == game_id)
     game = db.session.scalar(stmt)
     if game:
@@ -77,4 +81,24 @@ def delete_game(game_id):
     else:
         db.session.rollback()
         return {'error': f"game with id {game_id} not found"}, 404
+
+
+@game_bp.route('/<int:game_id>', methods = ["PUT", "PATCH"])
+@jwt_required()
+def update_game(game_id):
+    body_data = request.get_json()
+    stmt = db.select(Game).filter_by(id = game_id)
+    game = db.session.scalar(stmt)
+    if game:
+        game.title = body_data.get('title') or game.title
+        game.description = body_data.get('description') or game.description
+        game.genre = body_data.get('genre') or game.genre
+        game.publisher = body_data.get('publisher') or game.publisher
+        game.release_date = body_data.get('release_date') or game.release_date
+        game.developer_id = body_data.get('developer_id') or game.developer_id
+
+        db.session.commit()
+        return game_schema.dump(game)
     
+    else:
+        return{'error': f"game with id {game_id} not found"}, 404
