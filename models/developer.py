@@ -25,7 +25,7 @@ class DeveloperSchema(ma.Schema):
     games = fields.List(fields.Nested('GameSchema', exclude=['genre', 'publisher', 'release_date','developer']))
     
     class Meta:
-        fields = ("id", "name", "date_founded")
+        fields = ("id", "name", "date_founded", "games")
 
 developer_schema = DeveloperSchema()
-developers_schema = DeveloperSchema(many=True)
+developers_schema = DeveloperSchema(many=True, exclude=["games"])

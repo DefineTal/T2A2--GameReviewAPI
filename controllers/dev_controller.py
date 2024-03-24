@@ -74,15 +74,30 @@ def delete_dev(dev_id):
 @dev_bp.route('/<int:dev_id>', methods = ["PUT", "PATCH"])
 @jwt_required()
 def update_dev(dev_id):
-    body_data = developer_schema.load(request.get_json())
-    stmt = db.select(Developer).filter_by(id = dev_id)
-    dev = db.session.scalar(stmt)
-    if dev:
-        dev.name = body_data.get('name') or dev.name
-        dev.date_founded = body_data.get('date_founded') or dev.date_founded
+    try:
+        body_data = developer_schema.load(request.get_json())
+        stmt = db.select(Developer).filter_by(id = dev_id)
+        dev = db.session.scalar(stmt)
+        if dev:
+            dev.name = body_data.get('name') or dev.name
+            dev.date_founded = body_data.get('date_founded') or dev.date_founded
 
-        db.session.commit()
-        return developer_schema.dump(dev)
+            db.session.commit()
+            return developer_schema.dump(dev)
     
-    else:
-        return {'error': f"dev with id {dev_id} not found"}, 404
+        else:
+            return {'error': f"dev with id {dev_id} not found"}, 404
+    
+    except ValidationError as val_err:
+        db.session.rollback()
+        return {"error": str(val_err)}, 400
+    
+    except IntegrityError as err:
+        db.session.rollback()
+
+        if err.orig.pgcode == errorcodes.UNIQUE_VIOLATION:
+            return {"error": f"Developer name {dev.name} already recorded!"}, 409
+        
+        if err.orig.pgcode == errorcodes.CHECK_VIOLATION:
+            return {"error": "Invalid date try again!"}, 409
+    

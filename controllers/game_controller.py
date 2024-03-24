@@ -71,7 +71,7 @@ def create_game():
 def delete_game(game_id):
     is_admin = is_user_admin()
     if not is_admin:
-        return
+        return {"error": "You are not authorized to delete games"}
     stmt = db.select(Game).where(Game.id == game_id)
     game = db.session.scalar(stmt)
     if game:
@@ -86,19 +86,28 @@ def delete_game(game_id):
 @game_bp.route('/<int:game_id>', methods = ["PUT", "PATCH"])
 @jwt_required()
 def update_game(game_id):
-    body_data = request.get_json()
-    stmt = db.select(Game).filter_by(id = game_id)
-    game = db.session.scalar(stmt)
-    if game:
-        game.title = body_data.get('title') or game.title
-        game.description = body_data.get('description') or game.description
-        game.genre = body_data.get('genre') or game.genre
-        game.publisher = body_data.get('publisher') or game.publisher
-        game.release_date = body_data.get('release_date') or game.release_date
-        game.developer_id = body_data.get('developer_id') or game.developer_id
+    try:
+        body_data = request.get_json()
+        stmt = db.select(Game).filter_by(id = game_id)
+        game = db.session.scalar(stmt)
+        if game:
+            game.title = body_data.get('title') or game.title
+            game.description = body_data.get('description') or game.description
+            game.genre = body_data.get('genre') or game.genre
+            game.publisher = body_data.get('publisher') or game.publisher
+            game.release_date = body_data.get('release_date') or game.release_date
+            game.developer_id = body_data.get('developer_id') or game.developer_id
+            db.session.commit()
+            return game_schema.dump(game)
+        
+        else:
+            return{'error': f"game with id {game_id} not found"}, 404
+        
+    except IntegrityError as err:
+        db.session.rollback()
 
-        db.session.commit()
-        return game_schema.dump(game)
-    
-    else:
-        return{'error': f"game with id {game_id} not found"}, 404
+        if err.orig.pgcode == errorcodes.UNIQUE_VIOLATION:
+            return {"error": "Game name already recorded!"}, 409
+        
+        if err.orig.pgcode == errorcodes.CHECK_VIOLATION:
+            return {"error": "Invalid date try again!"}, 409

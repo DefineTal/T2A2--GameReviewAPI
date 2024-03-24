@@ -8,7 +8,7 @@ class Review(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     rating = db.Column(db.Integer, nullable = False)
     date_made = db.Column(db.Date, default=db.func.current_date())
-    completed = db.Column(db.Boolean)
+    completed = db.Column(db.Boolean, default = False)
     content = db.Column(db.Text)
 
 
