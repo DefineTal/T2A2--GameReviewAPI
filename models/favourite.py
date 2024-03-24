@@ -14,12 +14,8 @@ class Favourite(db.Model):
 
 class FavouriteSchema(ma.Schema):
 
-
-    user = fields.Integer(required = True)
-    user = fields.Nested('UserSchema', only = ['username'])
-    
-    game = fields.Integer(required = True)
-    game = fields.Nested('GameSchema', only = ['title']) 
+    user = fields.Nested('UserSchema', only=['username'], required=True)
+    game = fields.Nested('GameSchema', only=['title'], required=True)
 
     class Meta:
         fields = ('id','user','game')
