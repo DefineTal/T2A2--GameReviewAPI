@@ -50,12 +50,12 @@ def create_dev():
             return {"error": "Developer name already recorded!"}, 409
         
         if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
-            return {"error": f"{err.orig.diag.column_name} is null, make sure to input a value!"}, 409
+            return {"error": f"{err.orig.diag.column_name} is null, make sure to input a value!"}, 400
         
         if err.orig.pgcode == errorcodes.CHECK_VIOLATION:
             return {"error": "Invalid date try again!"}, 409
         
-        return {"error": "An integrity error occurred"}, 500
+        return {"error": "An integrity error occurred"}, 400
        
     except:
         return {"error": "Data error. Try again!"}, 409

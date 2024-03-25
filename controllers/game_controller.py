@@ -48,7 +48,7 @@ def create_game():
         db.session.add(game)
 
     except AttributeError:
-        return {"error": "Attribute error! Double check the json input fields!"}
+        return {"error": "Attribute error! Double check the json input fields!"}, 400
 
     try:
         db.session.commit()

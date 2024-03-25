@@ -39,13 +39,13 @@ def create_fav(user_id):
                 db.session.commit()
                 return favourite_schema.dump(fav)
             else:
-                return {"error" f"User with id {user_id} doesnt exist!"}
+                return {"error" f"User with id {user_id} doesnt exist!"}, 404
         else:
-            return {"error": "Only make your own favourites!"}
+            return {"error": "Only make your own favourites!"}, 401
         
     except IntegrityError as err:
             if err.orig.pgcode == errorcodes.FOREIGN_KEY_VIOLATION:
-                return {"error": f"Could not find game with id of {fav.game_id}"}
+                return {"error": f"Could not find game with id of {fav.game_id}"}, 404
  
         
 
@@ -66,7 +66,7 @@ def delete_fav(user_id, fav_id):
             db.session.rollback()
             return {'error': f"Favourite with id {fav_id} not found"}, 404
     else:
-       return {"error": "Only delete your own favourites!"}
+       return {"error": "Only delete your own favourites!"}, 401
 
 
 @fav_bp.route('/<int:fav_id>', methods=["PUT", "PATCH"])
@@ -86,11 +86,11 @@ def edit_fav(user_id, fav_id):
             else:
                 return {'error': f"Favourite with id {fav_id} not found"}, 404
         else:
-            return {"error": "Only edit your own favourites!"}
+            return {"error": "Only edit your own favourites!"}, 401
     
     except IntegrityError as err:
         if err.orig.pgcode == errorcodes.FOREIGN_KEY_VIOLATION:
             db.session.rollback()
-            return {"error": "Could not find game"}
+            return {"error": "Could not find game"}, 404
 
     

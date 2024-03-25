@@ -41,7 +41,7 @@ def create_review(game_id):
         db.session.commit()
         return review_schema.dump(review)
     else:
-        return {"error" f"game with id {game_id} doesnt exist!"}
+        return {"error" f"game with id {game_id} doesnt exist!"}, 404
     
 
 @review_bp.route('/<int:review_id>', methods=["DELETE"])
@@ -61,10 +61,10 @@ def delete_review(review_id, game_id):
             else:
                 return{"error": f"Review with id {review_id} not found in game with id {game_id}"}, 404
         else:
-            return {"error": "You are not authorised to delete this review"}
+            return {"error": "You are not authorised to delete this review"}, 401
         
     except AttributeError:
-        return {"error": f"Review with id of {review_id} doesnt exist"}
+        return {"error": f"Review with id of {review_id} doesnt exist"}, 404
 
 @review_bp.route('/<int:review_id>', methods=["PUT", "PATCH"])
 @jwt_required()
@@ -84,13 +84,13 @@ def edit_review(review_id, game_id):
                 db.session.commit()
                 return review_schema.dump(review)
             else:
-                return {"error": f"Review with id {review_id} not found in game with id {game_id}"}
+                return {"error": f"Review with id {review_id} not found in game with id {game_id}"}, 404
         else:
-            return {"error": "You are not authorised to edit this review"}
+            return {"error": "You are not authorised to edit this review"}, 401
         
     except IntegrityError as err:
         if err.orig.pgcode == errorcodes.CHECK_VIOLATION:
             return {"error": "Invalid rating try again! 1-10 are valid inputs"}, 409
 
     except StatementError as state:
-        return {"error": "'completed' column must be a boolean value!"}
+        return {"error": "'completed' column must be a boolean value!"}, 409
