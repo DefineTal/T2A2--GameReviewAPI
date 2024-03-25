@@ -27,7 +27,7 @@ Is this a problem that needs solving? Look probably not, at least for everyone. 
 
 ### Register
 
-![new_user](./images/new_user.PNG)
+![new_user](images/newuser.PNG)
 
 Description: Creates new a new user.
 
@@ -39,7 +39,7 @@ Restrictions:
 
 ### Login
 
-![login_user](./images/login_user.PNG)
+![login_user](images/loginuser.PNG)
 
 Description: User logs in if has correct credentials 
 
@@ -50,15 +50,15 @@ To log in a username and password must match a entry in the user table
 
 ### Get User/s
 
-![get_user](./images/get_user.PNG)
+![get_user](images/getuser.PNG)
 
-![get_users](./images/get_users.PNG)
+![get_users](images/getusers.PNG)
 
 Description: Returns all users or a specified user
 
 ### Delete User
 
-![delete_users](./images/delete_user.PNG)
+![delete_users](images/deleteuser.PNG)
 
 Description: Delete user
 
@@ -67,7 +67,7 @@ Restriction: User_id must be the same url user_id
 
 ### Edit User
 
-![edit_users](./images/edit_user.PNG)
+![edit_users](images/edituser.PNG)
 
 
 Description: Edit user
@@ -79,15 +79,15 @@ Restriction: User_id must be the same url user_id
 ## Developer Table
 
 ### Get Dev/s
-![get_dev](./images/get_devPNG.PNG)
+![get_dev](images/getdevPNG.PNG)
 
-![get_devs](./images/get_devs.png)
+![get_devs](images/getdevs.png)
 
 Description: Returns all developers or just a singular
 
 ### Create Dev
 
-![create_devs](./images/create_dev.PNG)
+![create_devs](images/createdev.PNG)
 
 Description: Create developer instance
 
@@ -99,14 +99,14 @@ Restrictions:
 ### Delete Dev
 
 
-![delete_devs](./images/delete_dev.png)
+![delete_devs](images/deletedev.png)
 
 Description: Delete developer
 
 
 ### Edit Dev
 
-![edit_devs](./images/edit_dev.PNG)
+![edit_devs](images/editdev.PNG)
 
 Description: Edit developer
 
@@ -116,26 +116,26 @@ Description: Edit developer
 
 ### Get Game/s
 
-![get_game](./images/get_game.PNG)
+![get_game](images/getgame.PNG)
 
-![get_games](./images/get_games.png)
+![get_games](images/getgames.png)
 
 Description: Returns games
 
 ### Create Game
 
-![get_game](./images/create_game.PNG)
+![get_game](images/creategame.PNG)
 
 Description: Create game model instance
 
 ### Delete Game
 
-![get_game](./images/delete_game.PNG)
+![get_game](images/deletegame.PNG)
 
 Description: Delete game instance
 
 ### Edit Game
-![get_game](./images/edit_game.PNG)
+![get_game](images/editgame.PNG)
 
 Description: Edit game instance
 
@@ -145,25 +145,25 @@ Description: Edit game instance
 
 ### Get Favs
 
-![get_favs](./images/get_fav.PNG)
+![get_favs](images/getfav.PNG)
 
 Description: Get a users favourites
 
 ### Create Fav
 
-![add_favs](./images/create_fav.PNG)
+![add_favs](images/createfav.PNG)
 
 Description: Create favourite instance connected with user
 
 ### Delete Fav
 
-![delete_favs](./images/delete_fav.PNG)
+![delete_favs](images/deletefav.PNG)
 
 Description: Delete favourite instance
 
 ### Edit Fav
 
-![edit_favs](./images/edit_fav.PNG)
+![edit_favs](images/editfav.PNG)
 
 Description: Edit favourite instance
 
@@ -171,22 +171,22 @@ Description: Edit favourite instance
 ## Review Table
 
 ### Get Reviews
-![get_rev](./images/get_review.PNG)
+![get_rev](images/getreview.PNG)
 
 Description: Gets reviews of associated game
 
 ### Create Review
-![create_rev](./images/create_review.PNG)
+![create_rev](images/createreview.PNG)
 
 Description: Creates review instance linked to associated game
 
 ### Edit Review
-![edit_rev](./images/edit_review.PNG)
+![edit_rev](images/editreview.PNG)
 
 Description: Edits Review instance
 
 ### Delete Review
-![delete_rev](./images/delete_review.PNG)
+![delete_rev](images/deletereview.PNG)
 
 Description: Deletes review instance
 
@@ -339,10 +339,10 @@ Much like the previous terminal assessment I used an app called Height due to it
 
 
 
-![ERD](./images/day0.PNG)
-![ERD](./images/day0.5.PNG)
-![ERD](./images/week1.PNG)
-![ERD](./images/week2.PNG)
-![ERD](./images/one%20hour%20left%20till%20midnight%20the%20day%20after%20due%20date.PNG)
-![ERD](./images/finished.PNG)
+![ERD](images/day0.PNG)
+![ERD](images/day0.5.PNG)
+![ERD](images/week1.PNG)
+![ERD](images/week2.PNG)
+![ERD](images/one%20hour%20left%20till%20midnight%20the%20day%20after%20due%20date.PNG)
+![ERD](images/finished.PNG)
 
