@@ -76,12 +76,10 @@ def delete_user(user_id):
 @jwt_required()
 def edit_user(user_id):
     try:
-        # admin check 
-        is_admin = is_user_admin()
         # current user id check
         current_user_id = int(get_jwt_identity())
         # permission check
-        if user_id == current_user_id or is_admin:
+        if user_id == current_user_id:
             # finds user with same id value as in url
             body_data = user_schema.load(request.get_json())
             stmt = db.select(User).filter_by(id = user_id)

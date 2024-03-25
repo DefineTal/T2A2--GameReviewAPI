@@ -105,7 +105,7 @@ def delete_game(game_id):
     if game:
         db.session.delete(game)
         db.session.commit()
-        return {'message': f"dev {game.title} deleted successfully"}
+        return {'message': f"{game.title} deleted successfully"}
     else:
         db.session.rollback()
         return {'error': f"game with id {game_id} not found"}, 404
