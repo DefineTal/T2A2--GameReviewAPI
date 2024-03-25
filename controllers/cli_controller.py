@@ -1,10 +1,13 @@
 from flask import Blueprint
+
 from init import db, bcrypt
+
 from models.user import User
 from models.developer import Developer
 from models.game import Game
 from models.favourite import Favourite
 from models.review import Review
+
 from sqlalchemy.exc import IntegrityError, DataError
 
 db_commands = Blueprint('db', __name__)

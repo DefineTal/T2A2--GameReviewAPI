@@ -1,9 +1,13 @@
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
 from init import db
+
 from models.developer import Developer, developer_schema, developers_schema
+
 from sqlalchemy.exc import IntegrityError, ArgumentError
 from psycopg2 import errorcodes
+
 from marshmallow import ValidationError
 
 

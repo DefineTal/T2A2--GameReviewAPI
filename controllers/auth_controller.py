@@ -1,11 +1,13 @@
+from datetime import timedelta
+
 from flask import Blueprint, request
+from flask_jwt_extended import create_access_token
+from marshmallow import ValidationError
+
 from init import db, bcrypt
 from models.user import User, user_schema
 from psycopg2 import errorcodes
 from sqlalchemy.exc import IntegrityError
-from flask_jwt_extended import create_access_token
-from datetime import timedelta 
-from marshmallow import ValidationError
 
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth/')

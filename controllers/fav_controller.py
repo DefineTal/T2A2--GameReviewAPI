@@ -1,8 +1,11 @@
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
 from init import db
+
 from models.favourite import Favourite, favourite_schema, favourites_schema
 from models.user import User
+
 from sqlalchemy.exc import IntegrityError
 from psycopg2 import errorcodes
 

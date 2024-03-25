@@ -1,4 +1,5 @@
 from init import db, ma
+
 from sqlalchemy import CheckConstraint
 from marshmallow import fields
 from marshmallow.validate import Length

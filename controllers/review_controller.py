@@ -1,8 +1,12 @@
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
 from init import db
-from models.review import Review, review_schema, reviews_schema
+
 from models.game import Game
+
+from models.review import Review, review_schema, reviews_schema
+
 from sqlalchemy.exc import IntegrityError, StatementError
 from psycopg2 import errorcodes
 

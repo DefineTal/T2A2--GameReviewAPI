@@ -1,12 +1,16 @@
 
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
 from init import db
+
 from models.game import Game, game_schema, games_schema
-from psycopg2 import errorcodes
-from sqlalchemy.exc import IntegrityError, ArgumentError
+
 from controllers.review_controller import review_bp
 from controllers.user_controller import is_user_admin
+
+from sqlalchemy.exc import IntegrityError, ArgumentError
+from psycopg2 import errorcodes
 
 game_bp = Blueprint('games', __name__, url_prefix='/games/')
 game_bp.register_blueprint(review_bp)

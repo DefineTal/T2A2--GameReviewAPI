@@ -1,10 +1,15 @@
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
 from init import db, bcrypt
+
 from models.user import User, users_schema, user_schema
+
 from controllers.fav_controller import fav_bp
+
 from sqlalchemy.exc import IntegrityError
 from psycopg2 import errorcodes
+
 from marshmallow import ValidationError
 
 users_bp = Blueprint('users', __name__, url_prefix='/users/')

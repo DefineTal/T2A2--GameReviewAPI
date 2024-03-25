@@ -1,6 +1,6 @@
 from init import db, ma
 from marshmallow import fields
-from sqlalchemy import CheckConstraint
+
 
 class Review(db.Model):
     __tablename__ = "reviews"
