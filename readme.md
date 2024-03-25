@@ -62,7 +62,7 @@ Description: Returns all users or a specified user
 
 Description: Delete user
 
-Restriction: User_id must be the same url user_id
+Restriction: jwt_identity must be the same url user_id
 
 
 ### Edit User
@@ -72,7 +72,7 @@ Restriction: User_id must be the same url user_id
 
 Description: Edit user
 
-Restriction: User_id must be the same url user_id
+Restriction: jwt_idenity must be the same url user_id
 
 ---
 
@@ -91,7 +91,7 @@ Description: Returns all developers or just a singular
 
 Description: Create developer instance
 
-Restrictions:
+Restrictions: JWT token
 ```python
     name = fields.String(required = True, validate = Length(min = 1))
 ```
@@ -103,12 +103,16 @@ Restrictions:
 
 Description: Delete developer
 
+Restrictions: JWT Token
+
 
 ### Edit Dev
 
 ![edit_devs](images/editdev.PNG)
 
 Description: Edit developer
+
+Restrictions: JWT Token
 
 ---
 
@@ -128,16 +132,24 @@ Description: Returns games
 
 Description: Create game model instance
 
+Restriction: JWT Token
+
+
 ### Delete Game
 
 ![get_game](images/deletegame.PNG)
 
 Description: Delete game instance
 
+Restriction: JWT Token
+
+
 ### Edit Game
 ![get_game](images/editgame.PNG)
 
 Description: Edit game instance
+
+Restriction: JWT Token
 
 ---
 
@@ -155,17 +167,25 @@ Description: Get a users favourites
 
 Description: Create favourite instance connected with user
 
+Restriction: JWT Token
+
+
 ### Delete Fav
 
 ![delete_favs](images/deletefav.PNG)
 
 Description: Delete favourite instance
 
+Restriction: JWT Token
+
 ### Edit Fav
 
 ![edit_favs](images/editfav.PNG)
 
 Description: Edit favourite instance
+
+Restriction: JWT Token
+
 
 ---
 ## Review Table
@@ -180,15 +200,24 @@ Description: Gets reviews of associated game
 
 Description: Creates review instance linked to associated game
 
+Restriction: JWT Token
+
+
 ### Edit Review
 ![edit_rev](images/editreview.PNG)
 
 Description: Edits Review instance
 
+Restriction: JWT Token
+
+
 ### Delete Review
 ![delete_rev](images/deletereview.PNG)
 
 Description: Deletes review instance
+
+Restriction: JWT Token
+
 
 ---
 
